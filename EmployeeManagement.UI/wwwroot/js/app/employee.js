@@ -118,30 +118,30 @@ function DeleteEmployee() {
 }
 
 function SearchEmployee() {
-    if (sTimeout) {
-        clearTimeout(sTimeout);
-    }
-    sTimeout = setTimeout(function () {
-        var keyword = $("#txtSearch").val();
-        if (keyword.trim() != "") {
-            currentRequest = $.ajax({
-                url: "/Home/SearchEmployees?keyword=" + keyword,
-                type: "GET",
-                beforeSend: function () {
-                    if (currentRequest) {
-                        currentRequest.abort();
-                    }
+    //if (sTimeout) {
+    //    clearTimeout(sTimeout);
+    //}
+    //sTimeout = setTimeout(function () {
+    var keyword = $("#txtSearch").val();
+    if (keyword.trim() != "") {
+        currentRequest = $.ajax({
+            url: "/Home/SearchEmployees?keyword=" + keyword,
+            type: "GET",
+            beforeSend: function () {
+                if (currentRequest) {
+                    currentRequest.abort();
                 }
-            }).done(function (partialViewResult) {
-                $("#empList").html(partialViewResult);
-                clearTimeout(sTimeout);
-                sTimeout = null;
-            });
-        }
-        else {
-            loadEmployee();
-        }
-    }, 0);
+            }
+        }).done(function (partialViewResult) {
+            $("#empList").html(partialViewResult);
+            clearTimeout(sTimeout);
+            sTimeout = null;
+        });
+    }
+    else {
+        loadEmployee();
+    }
+    //}, 0);
 }
 
 //#endregion
