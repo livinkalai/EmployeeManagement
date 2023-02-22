@@ -141,7 +141,7 @@ function SearchEmployee() {
         else {
             loadEmployee();
         }
-    }, 50);
+    }, 0);
 }
 
 //#endregion
