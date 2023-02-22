@@ -55,7 +55,7 @@
         }
 
         #toasts .toast.error {
-            background: #f44336;
+            background: #dc3545;
         }
 
         #toasts .toast.show {

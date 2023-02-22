@@ -4,7 +4,7 @@ var sTimeout;
 
 //#region - Common Bind
 $(document).ready(function () {
-    loadEmployee();
+    loadEmployee(true);
 });
 
 //#endregion
@@ -40,7 +40,7 @@ function SaveEmployee() {
                 success: function (response) {
                     hideLoader();
                     toastApiResponse(response);
-                    loadEmployee();
+                    loadEmployee(true);
                     hideEmployeeModal();
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -104,7 +104,7 @@ function DeleteEmployee() {
                     success: function (response) {
                         hideLoader();
                         toastApiResponse(response);
-                        loadEmployee();
+                        loadEmployee(true);
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         hideLoader();
@@ -148,8 +148,25 @@ function SearchEmployee() {
 
 //#region - Private
 
-function loadEmployee() {
-    $("#empList").load("/Home/GetEmployees");
+function loadEmployee(isShowLoader) {
+    if (isShowLoader) {
+        showLoader();
+    }
+    $.ajax({
+        url: "/Home/GetEmployees",
+        type: "GET",
+        success: function () {
+            hideLoader();
+
+        },
+        error: function () {
+            hideLoader();
+
+        }
+    }).done(function (partialViewResult) {
+        $("#empList").html(partialViewResult);
+        hideLoader();
+    });
 }
 
 function clearForm() {
