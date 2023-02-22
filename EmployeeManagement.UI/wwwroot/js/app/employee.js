@@ -4,12 +4,6 @@ var sTimeout;
 
 //#region - Common Bind
 $(document).ready(function () {
-    $(document).ajaxStart(function () {
-        $("#ajaxSpinner").show();
-    })
-    $(document).ajaxStop(function () {
-        $("#ajaxSpinner").hide();
-    })
     loadEmployee();
 });
 
@@ -44,17 +38,20 @@ function SaveEmployee() {
                 dataType: 'json',
                 data: JSON.stringify(employee),
                 success: function (response) {
+                    hideLoader();
                     toastApiResponse(response);
                     loadEmployee();
                     hideEmployeeModal();
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     toast("error", "Error occurred");
+                    hideLoader();
                 }
             });
         });
     }
     catch (err) {
+        hideLoader();
         toast("error", err);
     }
 }
@@ -70,6 +67,7 @@ function EditEmployee(Id) {
                 headers: { "Authorization": "Bearer " + token },
                 dataType: 'json',
                 success: function (response) {
+                    hideLoader();
                     if (response) {
                         toastApiResponse(response);
                         $("#hdnEmployeeId").val(response.id);
@@ -81,11 +79,12 @@ function EditEmployee(Id) {
                     }
                 },
                 error: function (err) {
-
+                    hideLoader();
                 }
             });
         });
     } catch (e) {
+        hideLoader();
     }
 }
 
@@ -103,15 +102,17 @@ function DeleteEmployee() {
                     headers: { "Authorization": "Bearer " + token },
                     dataType: 'json',
                     success: function (response) {
+                        hideLoader();
                         toastApiResponse(response);
                         loadEmployee();
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
-
+                        hideLoader();
                     }
                 });
             });
         } catch (err) {
+            hideLoader();
         }
     }
 }
@@ -140,7 +141,7 @@ function SearchEmployee() {
         else {
             loadEmployee();
         }
-    }, 100);
+    }, 50);
 }
 
 //#endregion
@@ -198,6 +199,7 @@ function toast(type, message) {
 }
 
 function GetToken(successCallback) {
+    showLoader();
     try {
         $.ajax({
             type: 'GET',
@@ -209,11 +211,19 @@ function GetToken(successCallback) {
                 }
             },
             error: function (err) {
-
+                hideLoader();
             }
         });
     } catch (e) {
+        hideLoader();
     }
 }
 
+function showLoader() {
+    $("#ajaxSpinner").show();
+}
+
+function hideLoader() {
+    $("#ajaxSpinner").hide();
+}
 //#endregion
