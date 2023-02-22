@@ -1,0 +1,90 @@
+﻿@model EmployeeViewModel
+@{
+    ViewData["Title"] = "Employee Management";
+}
+
+<input id="hdnBaseApiUrl" type="hidden" value="@ViewBag.APIBaseUrl" />
+
+<div class="row mb-3">
+    <div class="col-4">
+        <button onclick="showAddEmployeeModal();" class="btn btn-primary custom-theme-1-bg"> Add New</button>
+    </div>
+    <div class="col-4">
+    </div>
+    <div class="col-4">
+        <input id="txtSearch" type="text" class="form-control" placeholder="Search" onkeyup="SearchEmployee();" />
+    </div>
+</div>
+
+<div class="row">
+    <div id="empList" class="col-md-12">
+        @Html.Partial("/Views/Shared/_EmployeelList.cshtml")
+    </div>
+</div>
+
+<div id="addNewEmployeeModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header custom-theme-1-bg">
+                <h4 class="modal-title">Add New Employee</h4>
+                <button onclick="hideEmployeeModal()" type="button" class="btn-close" data-dismiss="modal"></button>
+
+            </div>
+            <div class="modal-body">
+                <form id="newEmpform">
+                    <input id="hdnEmployeeId" type="hidden" value="0" />
+                    <div class="mb-3">
+                        <label class="form-label" for="Name">Name <span class="text-danger">*</span></label>
+                        @Html.TextBoxFor(m => m.Name, htmlAttributes: new  {  @class = "form-control", required="required"   })
+                        @Html.ValidationMessageFor(m => m.Name, "", new  {  @class = "text-danger"  })
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="Email">Email <span class="text-danger">*</span></label>
+                        @Html.TextBoxFor(m => m.Email, htmlAttributes: new  {  @class = "form-control", required="required", type="email"   })
+                        @Html.ValidationMessageFor(m => m.Email, "", new  {  @class = "text-danger"  })
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="txtDOB">DOB <span class="text-danger">*</span></label>
+                        @Html.TextBoxFor(m => m.DOB, htmlAttributes: new  {  @class = "form-control", max=@DateTime.Now.ToString("yyyy-MM-dd"), required="required", type="date"   })
+                        @Html.ValidationMessageFor(m => m.DOB, "", new  {  @class = "text-danger"  })
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="txtDepartment">Department <span class="text-danger">*</span></label>
+                        @Html.TextBoxFor(m => m.Department, htmlAttributes: new  {  @class = "form-control", required="required"   })
+                        @Html.ValidationMessageFor(m => m.Department, "", new  {  @class = "text-danger"  })
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary custom-theme-1-bg" onclick="SaveEmployee()">Save</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="confirmationModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header custom-theme-1-bg">
+                <h4 class="modal-title">Are you sure want to delete this ?</h4>
+                <button onclick="hideConfirmationModal()" type="button" class="btn-close" data-dismiss="modal"></button>
+
+            </div>
+            <div class="modal-body">
+            </div>
+
+            <div class="modal-footer">
+                <button onclick="DeleteEmployee()" type="button" class="btn btn-primary custom-theme-1-bg">Yes</button>
+                <button onclick="hideConfirmationModal()" type="button" class="btn btn-default custom-theme-1-bg" data-dismiss="modal">No</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/js/app/employee.js"></script>
+}

@@ -1,0 +1,24 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.custom-theme-1-bg {
+    background-image: linear-gradient(135deg, #6bafb7, #174da5) !important;
+    background-repeat: repeat-x !important;
+    color: white !important;
+}
