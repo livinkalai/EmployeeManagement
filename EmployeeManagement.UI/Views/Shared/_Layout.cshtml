@@ -22,11 +22,13 @@
         </nav>
     </header>
     <div class="container">
-        <div id="toasts"></div>
-
+        <div id="ajaxSpinner" class="modal">
+            <img src="~/lib/ajax-loader.gif" />
+        </div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
+        <div id="toasts"></div>
     </div>
 
     <footer class="border-top footer text-muted custom-theme-1-bg">

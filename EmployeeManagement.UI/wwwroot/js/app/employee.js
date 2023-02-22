@@ -2,10 +2,17 @@
 var currentRequest = null;
 var sTimeout;
 
-//#region - Bind
+//#region - Common Bind
 $(document).ready(function () {
+    $(document).ajaxStart(function () {
+        $("#ajaxSpinner").show();
+    })
+    $(document).ajaxStop(function () {
+        $("#ajaxSpinner").hide();
+    })
     loadEmployee();
 });
+
 //#endregion
 
 //#region - AJAX calls
